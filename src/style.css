@@ -1,0 +1,19 @@
+.container {
+    max-width: 768px;
+}
+
+@media (max-width: 767px) {
+    .container {
+        max-width: 90vw;
+    }
+}
+
+.footer {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+}
+
+.pointer {
+    cursor: pointer;
+}

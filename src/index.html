@@ -1,24 +1,163 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Matrix Alias Resolver</title>
-</head>
-<body>
-    <form id="aForm">
-        Room Alias:
-        <input
-            type="text"
-            id="alias"
-            minlength="7"
-            maxlength="255"
-            style="width: 300px"
-        >
-        <button type="submit">Resolve</button>
-        <br /><br />
-        <span id="roomId"></span>
-    </form>
-    <script src="./script.js"></script>
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Matrix Alias Resolver</title>
+        <link
+            rel="icon"
+            href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>m</text></svg>"
+        />
+        <link href="./bootstrap/bootstrap.min.css" rel="stylesheet" />
+        <link href="./style.css" rel="stylesheet" />
+    </head>
+
+    <body class="d-flex flex-column h-100">
+        <div class="container mt-5">
+            <div class="row mb-3">
+                <div class="col">
+                    <h1>Matrix Alias Resolver</h1>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <form id="aliasForm">
+                    <div class="input-group has-validation">
+                        <div class="form-floating" id="aliasInputForm">
+                            <input type="text" class="form-control" minlength="7" maxlength="255" id="alias" />
+                            <label for="alias">Room Alias</label>
+                        </div>
+                        <span class="input-group-text">
+                            <button type="submit" class="btn btn-primary">Resolve</button>
+                        </span>
+                        <div id="secretError" class="invalid-feedback"></div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="row mb-3">
+                <div class="input-group has-validation">
+                    <div class="form-floating" id="resultForm">
+                        <input type="text" class="form-control" id="result" disabled />
+                        <label for="result">Room ID</label>
+                    </div>
+                    <span class="input-group-text">
+                        <button type="btn" id="copyBtn" class="btn btn-primary" onclick="copy()">Copy 💾</button>
+                    </span>
+                    <div id="secretError" class="invalid-feedback"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-toggle="modal"
+                data-bs-target="#aboutModal"
+                width="50px"
+            >
+                About
+            </button>
+        </div>
+
+        <!-- About Modal -->
+        <div class="modal fade" id="aboutModal" tabindex="-1" aria-labelledby="aboutModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="aboutModalLabel">About</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col">
+                                <p>
+                                    The page is hosted with GitHub Pages. You can read their Privacy Policy
+                                    <a
+                                        href="https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        >here</a
+                                    >.
+                                </p>
+                                <p>
+                                    No data is stored in your browser and no data is ever sent to the server at
+                                    <code><span id="current-url"></span></code>.
+                                </p>
+
+                                <p>
+                                    Find the source code on
+                                    <a
+                                        href="https://github.com/Twi1ightSparkle/matrix-alias-resolver"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        >GitHub</a
+                                    >.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <h5>Credits</h5>
+                                <ul>
+                                    <li>
+                                        Theme by
+                                        <a href="https://getbootstrap.com/" target="_blank" rel="noopener noreferrer"
+                                            >Bootstrap</a
+                                        >
+                                        used under the terms of
+                                        <a
+                                            href="https://github.com/twbs/bootstrap/blob/main/LICENSE"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            >MIT License</a
+                                        >.
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <h5>Disclaimer</h5>
+                                <p>
+                                    <small>
+                                        Resolve Matrix Room Alias<br />
+                                        Copyright (C) 2023 Twilight Sparkle
+                                        <br /><br />
+                                        This program is free software: you can redistribute it and/or modify it under
+                                        the terms of the GNU Affero General Public License as published by the Free
+                                        Software Foundation, either version 3 of the License, or (at your option) any
+                                        later version.
+                                        <br /><br />
+                                        This program is distributed in the hope that it will be useful, but WITHOUT ANY
+                                        WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+                                        PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
+                                        <br /><br />
+                                        You should have received a copy of the GNU Affero General Public License along
+                                        with this program. If not, see
+                                        <a
+                                            href="https://www.gnu.org/licenses/"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            >https://www.gnu.org/licenses/</a
+                                        >.
+                                    </small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="./bootstrap/bootstrap.bundle.min.js"></script>
+        <script src="./script.js"></script>
+    </body>
 </html>

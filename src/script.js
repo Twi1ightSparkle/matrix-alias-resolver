@@ -1,5 +1,29 @@
-const getServer = (alias) => {
-    return server = alias.split(':')[1];
+const aliasForm = document.getElementById('aliasForm');
+const aliasInputForm = document.getElementById('aliasInputForm');
+const aliasId = document.getElementById('alias');
+const resultForm = document.getElementById('resultForm');
+const copyBtn = document.getElementById('copyBtn');
+const resultId = document.getElementById('result');
+
+const error = (errorText) => {
+    if (errorText) {
+        aliasId.classList.add('is-invalid');
+        aliasInputForm.classList.add('is-invalid');
+        resultId.value = errorText;
+    } else {
+        aliasId.classList.remove('is-invalid');
+        aliasInputForm.classList.remove('is-invalid');
+        resultId.value = '';
+    }
+};
+
+const copy = () => {
+    navigator.clipboard.writeText(resultId.value);
+
+    copyBtn.textContent = 'Copied ✅';
+    setTimeout(() => {
+        copyBtn.textContent = 'Copy 💾';
+    }, 2000);
 };
 
 const getServerDel = async (server) => {
@@ -16,7 +40,7 @@ const getServerDel = async (server) => {
 const resolveAlias = async (url, alias) => {
     try {
         const encoded = encodeURIComponent(alias);
-        const response = await fetch(`${url}/_matrix/client/r0/directory/room/${encoded}`)
+        const response = await fetch(`${url}/_matrix/client/r0/directory/room/${encoded}`);
         if (response.status != 200) throw new Error();
         const result = await response.json();
         return result.room_id;
@@ -26,26 +50,28 @@ const resolveAlias = async (url, alias) => {
     }
 };
 
-document.querySelector('#aForm').addEventListener('submit', async (e) => {
+aliasForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const roomAlias = document.getElementById('alias').value;
-    const result = document.getElementById('roomId');
-    result.textContent = '';
+    error();
+    const roomAlias = aliasId.value;
 
     const aliasRegex = /#[\w-_\+]+:[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
     if (!roomAlias.match(aliasRegex)) {
-        return result.textContent = `Invalid alias: ${roomAlias}`;
+        return error(`Invalid alias: ${roomAlias}`);
     }
 
-    let res = '';
+    let roomId = '';
     try {
-        const server = getServer(roomAlias);
+        const server = roomAlias.split(':')[1];
         const url = await getServerDel(server);
-        const roomId = await resolveAlias(url, roomAlias);
-        res = `Room ID: ${roomId}`;
+        roomId = await resolveAlias(url, roomAlias);
     } catch (err) {
-        res = err;
+        return error(err);
     }
 
-    return result.textContent = res;
+    return (resultId.value = roomId);
 });
+
+window.onload = function () {
+    document.querySelector('#current-url').textContent = window.location.host;
+};
