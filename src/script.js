@@ -28,9 +28,13 @@ const copy = () => {
 
 const getServerDel = async (server) => {
     try {
-        const response = await fetch(`https://${server}/.well-known/matrix/client`);
+        let response;
+        response = await fetch(`https://${server}/.well-known/matrix/client`);
+        if (response.status === 404) {
+            response = await fetch(`https://${server}/.well-known/matrix/server`);
+        }
         const result = await response.json();
-        return result['m.homeserver'].base_url;
+        return result['m.homeserver'] || `https://${result['m.server'].split(':')[0]}`;
     } catch (err) {
         console.error(`Unable to fetch ${server} well-knowns: ${err}`);
         throw new Error(`Unable to resolve ${server}`);
