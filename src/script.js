@@ -34,7 +34,7 @@ const getServerDel = async (server) => {
             response = await fetch(`https://${server}/.well-known/matrix/server`);
         }
         const result = await response.json();
-        return result['m.homeserver'] || `https://${result['m.server'].split(':')[0]}`;
+        return result['m.homeserver']['base_url'] || `https://${result['m.server'].split(':')[0]}`;
     } catch (err) {
         console.error(`Unable to fetch ${server} well-knowns: ${err}`);
         throw new Error(`Unable to resolve ${server}`);
