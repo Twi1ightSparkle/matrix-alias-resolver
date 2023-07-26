@@ -2,15 +2,18 @@ const aliasForm = document.getElementById('aliasForm');
 const aliasInputForm = document.getElementById('aliasInputForm');
 const aliasId = document.getElementById('alias');
 const resultForm = document.getElementById('resultForm');
+const resultLabel = document.getElementById('resultLabel');
 const copyBtn = document.getElementById('copyBtn');
 const resultId = document.getElementById('result');
 
 const error = (errorText) => {
     if (errorText) {
+        resultLabel.innerText='Error';
         aliasId.classList.add('is-invalid');
         aliasInputForm.classList.add('is-invalid');
         resultId.value = errorText;
     } else {
+        resultLabel.innerText='Room ID';
         aliasId.classList.remove('is-invalid');
         aliasInputForm.classList.remove('is-invalid');
         resultId.value = '';
@@ -68,6 +71,7 @@ aliasForm.addEventListener('submit', async (e) => {
     try {
         const server = roomAlias.split(':')[1];
         const url = await getServerDel(server);
+        console.log(url)
         roomId = await resolveAlias(url, roomAlias);
     } catch (err) {
         return error(err);
