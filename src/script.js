@@ -60,7 +60,7 @@ const resolveAlias = async (url, alias) => {
 aliasForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     error();
-    const roomAlias = aliasId.value;
+    const roomAlias = aliasId.value?.trim();
 
     const aliasRegex = /#[\w-_\+]+:[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
     if (!roomAlias.match(aliasRegex)) {
