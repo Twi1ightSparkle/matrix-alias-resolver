@@ -44,6 +44,11 @@ const getServerDel = async (server) => {
     }
 };
 
+const matchAlias = (alias) => {
+    const aliasRegex = /#[\w-_\+]+:[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
+    return alias.match(aliasRegex);
+}
+
 const resolveAlias = async (url, alias) => {
     try {
         const encoded = encodeURIComponent(alias);
@@ -60,11 +65,7 @@ const resolveAlias = async (url, alias) => {
 const submitForm = async () => {
     error();
     const roomAlias = aliasId.value?.trim();
-
-    const aliasRegex = /#[\w-_\+]+:[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
-    if (!roomAlias.match(aliasRegex)) {
-        return error(`Invalid alias: ${roomAlias}`);
-    }
+    if (!matchAlias(roomAlias)) return error(`Invalid alias: ${roomAlias}`);
 
     let roomId = '';
     try {
@@ -90,6 +91,7 @@ window.onload = async function () {
     const urlParams = new URLSearchParams(queryString);
     if (urlParams.has('alias')) {
         const alias = `#${urlParams.get('alias')}`;
+        if (!matchAlias(alias)) return;
         aliasId.value = alias;
         submitForm();
     }
