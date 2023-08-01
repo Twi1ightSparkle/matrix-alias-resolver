@@ -75,12 +75,25 @@
                             <div class="col">
                                 <p>
                                     TIP: You can also pass the alias as a query parameter to resolve it immediately:
-                                    <code>
-                                        <span>
-                                            https://twi1ightsparkle.github.io/matrix-alias-resolver?alias=matrix:matrix.org
-                                        </span>
-                                    </code>. Note that you cannot include the # in the URL.
-                                </p>
+                                    <a
+                                        href="https://twi1ightsparkle.github.io/matrix-alias-resolver/?alias=matrix:matrix.org"
+                                        ><code
+                                            ><span
+                                                >https://twi1ightsparkle.github.io/matrix-alias-resolver/?alias=matrix:matrix.org</span
+                                            ></code
+                                        ></a
+                                    >.<br />
+                                    Note that the <code><span>#</span></code> must either be URL encoded as
+                                    <code><span>%23</span></code> or omitted. If the alias has multiple
+                                    <code><span>#</span></code
+                                    >, they must be URL encoded. <a
+                                    href="https://twi1ightsparkle.github.io/matrix-alias-resolver/?alias=%23%23matrix:matrix.org"
+                                    ><code
+                                        ><span
+                                            >https://twi1ightsparkle.github.io/matrix-alias-resolver/?alias=%23%23matrix:matrix.org</span
+                                        ></code
+                                    ></a
+                                >.
                                 </p>
                                 <p>
                                     The page is hosted with GitHub Pages. You can read their Privacy Policy

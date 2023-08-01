@@ -90,7 +90,8 @@ window.onload = async function () {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     if (urlParams.has('alias')) {
-        const alias = `#${urlParams.get('alias')}`;
+        const param = urlParams.get('alias')
+        const alias = param.startsWith('#') ? param : `#${param}`;
         if (!matchAlias(alias)) return;
         aliasId.value = alias;
         submitForm();
