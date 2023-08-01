@@ -57,8 +57,7 @@ const resolveAlias = async (url, alias) => {
     }
 };
 
-aliasForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
+const submitForm = async () => {
     error();
     const roomAlias = aliasId.value?.trim();
 
@@ -78,8 +77,21 @@ aliasForm.addEventListener('submit', async (e) => {
     }
 
     return (resultId.value = roomId);
+};
+
+aliasForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    await submitForm();
 });
 
-window.onload = function () {
+window.onload = async function () {
     document.querySelector('#current-url').textContent = window.location.host;
+    document.querySelector('#query-help').textContent = window.location;
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    if (urlParams.has('alias')) {
+        const alias = `#${urlParams.get('alias')}`;
+        aliasId.value = alias;
+        await submitForm();
+    }
 };
