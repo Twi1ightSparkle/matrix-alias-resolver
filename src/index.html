@@ -86,14 +86,15 @@
                                     Note that the <code><span>#</span></code> must either be URL encoded as
                                     <code><span>%23</span></code> or omitted. If the alias has multiple
                                     <code><span>#</span></code
-                                    >, they must be URL encoded. <a
-                                    href="https://twi1ightsparkle.github.io/matrix-alias-resolver/?alias=%23%23matrix:matrix.org"
-                                    ><code
-                                        ><span
-                                            >https://twi1ightsparkle.github.io/matrix-alias-resolver/?alias=%23%23matrix:matrix.org</span
-                                        ></code
-                                    ></a
-                                >.
+                                    >, they must be URL encoded.
+                                    <a
+                                        href="https://twi1ightsparkle.github.io/matrix-alias-resolver/?alias=%23%23matrix:matrix.org"
+                                        ><code
+                                            ><span
+                                                >https://twi1ightsparkle.github.io/matrix-alias-resolver/?alias=%23%23matrix:matrix.org</span
+                                            ></code
+                                        ></a
+                                    >.
                                 </p>
                                 <p>
                                     The page is hosted with GitHub Pages. You can read their Privacy Policy
@@ -118,6 +119,12 @@
                                         >GitHub</a
                                     >.
                                 </p>
+                                <p>
+                                    See my privacy policy
+                                    <a href="https://twilightsparkle.dev/privacy/policy.html">here</a>.
+                                </p>
+                                <div id="matomo-opt-out"></div>
+                                <br />
                             </div>
                         </div>
 
@@ -181,5 +188,20 @@
 
         <script src="./bootstrap/bootstrap.bundle.min.js"></script>
         <script src="./script.js"></script>
+
+        <!-- Analytics -->
+        <script src="https://twilightsparkle.dev/privacy/privacy.js"></script>
+        <script src="https://twilightsparkle.dev/privacy/opt-out.js"></script>
+        <script>
+            var _paq = (window._paq = window._paq || []);
+            _paq.push(['trackPageView']);
+            _paq.push(['enableLinkTracking']);
+            (function () {
+                _paq.push(['setTrackerUrl', 'https://analytics.twilightsparkle.dev/matomo.php']);
+                _paq.push(['setSiteId', '5']);
+            })();
+        </script>
+        <script async defer src="https://analytics.twilightsparkle.dev/matomo.js"></script>
+        <!-- Analytics -->
     </body>
 </html>
